@@ -17,6 +17,8 @@ import Admin from "./pages/Admin";
 import NFTRewards from "./pages/NFTRewards";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import Auth from './pages/Auth';
+
 
 const queryClient = new QueryClient();
 
@@ -40,6 +42,8 @@ const App = () => (
               <Route path="/nft-rewards" element={<NFTRewards />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="*" element={<NotFound />} />
+              <Route path="/auth" element={<Auth />} />
+
             </Routes>
           </BrowserRouter>
         </TooltipProvider>
