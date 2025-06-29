@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { FaUser, FaLock, FaEnvelope, FaSignInAlt, FaUserPlus } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import supabase from '../supabaseClient';
 
 interface FormData {
   firstName: string;
@@ -29,24 +30,44 @@ const Auth = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isSignIn) {
-      // Handle login
-      console.log('Login:', { email: formData.email, password: formData.password });
+      const { error } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      });
+      if (error) alert(error.message);
     } else {
-      // Handle registration
       if (formData.password !== formData.confirmPassword) {
         alert("Passwords don't match!");
         return;
       }
-      console.log('Register:', formData);
+      const { error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            first_name: formData.firstName,
+            last_name: formData.lastName,
+          },
+        },
+      });
+      if (error) {
+        alert(error.message);
+      } else {
+        alert('Check your email for a verification link!');
+      }
     }
   };
 
-  const handleGoogleSignIn = () => {
-    // Implement Google OAuth
-    console.log('Google sign in');
+  const handleGoogleSignIn = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+    });
+    if (error) {
+      alert(`Error signing in with Google: ${error.message}`);
+    }
   };
 
   return (
@@ -66,7 +87,7 @@ const Auth = () => {
               <button 
                 type="button"
                 onClick={handleGoogleSignIn}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors"
+                className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 <FcGoogle className="text-xl" />
                 <span>Sign up with Google</span>
