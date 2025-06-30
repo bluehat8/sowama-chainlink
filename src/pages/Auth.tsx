@@ -91,8 +91,8 @@ export default function Auth() {
       <div
         className={`auth-container relative ${isSignIn ? "" : "right-panel-active"}`}
         style={{
-          width: "900px",
-          minHeight: "600px",
+          width: "950px",
+          minHeight: "650px",
         }}
       >
         {/* Sign Up Form */}
@@ -104,6 +104,7 @@ export default function Auth() {
             onSubmit={handleSubmit}
             className="glass-card p-8 w-full max-w-lg"
           >
+            <img src="/logo.svg" alt="Logo" className="w-20 h-20 mx-auto mb-4" />
             <h1 className="text-2xl font-bold mb-4 text-center text-white">Create Account</h1>
 
             <div className="flex justify-center mb-4">
@@ -212,6 +213,16 @@ export default function Auth() {
                 <UserPlus className="w-4 h-4" />
                 <span>Sign Up</span>
               </button>
+              <p className="mt-4 text-center text-sm text-white/80 md:hidden">
+                Already have an account?{' '}
+                <button
+                  type="button"
+                  onClick={() => setIsSignIn(true)}
+                  className="font-semibold text-emerald-300 hover:text-emerald-200 transition-colors bg-transparent border-none p-0"
+                >
+                  Sign In
+                </button>
+              </p>
             </div>
           </motion.form>
         </div>
@@ -225,6 +236,7 @@ export default function Auth() {
             onSubmit={handleSubmit}
             className="glass-card p-8 w-full max-w-lg z-10"
           >
+            <img src="/logo.svg" alt="Logo" className="w-20 h-20 mx-auto mb-6" />
             <h1 className="text-2xl font-bold mb-6 text-center text-white">Sign in</h1>
 
             <div className="flex justify-center mb-6">
@@ -292,6 +304,16 @@ export default function Auth() {
                 <LogIn className="w-4 h-4" />
                 <span>Sign In</span>
               </button>
+              <p className="mt-4 text-center text-sm text-white/80 md:hidden">
+                Don't have an account?{' '}
+                <button
+                  type="button"
+                  onClick={() => setIsSignIn(false)}
+                  className="font-semibold text-emerald-300 hover:text-emerald-200 transition-colors bg-transparent border-none p-0"
+                >
+                  Sign Up
+                </button>
+              </p>
             </div>
           </motion.form>
         </div>
